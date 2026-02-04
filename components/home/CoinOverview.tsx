@@ -1,11 +1,20 @@
 import React from "react";
 import { fetcher } from "@/lib/coingekco.actions";
 import Image from "next/image";
+import { CoinOverviewFallback } from "./Fallback";
+import { formatCurrency } from "@/lib/utils";
 
 const CoinOverview = async () => {
-  const coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
-    dex_pair__format: "symbol",
-  });
+  let coin;
+
+  try {
+    coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
+      dex_pair__format: "symbol",
+    });
+  } catch (error) {
+    console.log(error);
+    return <CoinOverviewFallback />;
+  }
 
   return (
     <div id="coin-overview">
@@ -19,7 +28,7 @@ const CoinOverview = async () => {
       </div>
       <div className="info">
         <p>Bitcoin / BTC</p>
-        <h1>$89,523.12</h1>
+        <h1>{formatCurrency(coin.market_data.current_price.usd)}</h1>
       </div>
     </div>
   );

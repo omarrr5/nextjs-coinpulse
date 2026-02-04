@@ -37,7 +37,7 @@ const columns: DataTableColumn<TrendingCoin>[] = [
         >
           <p>
             {isTrendingUp ? <TrendingUp /> : <TrendingDown />}
-            {item.data.price_change_percentage_24h.usd}
+            {item.data.price_change_percentage_24h.usd.toFixed(2)}
           </p>
         </div>
       );
@@ -49,7 +49,7 @@ const columns: DataTableColumn<TrendingCoin>[] = [
     cell: (coin) => {
       const item = coin.item;
 
-      return <p>{item.data.price}</p>;
+      return <p>{item.data.price.toFixed(2)}</p>;
     },
   },
 ];

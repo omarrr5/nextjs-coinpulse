@@ -15,7 +15,7 @@ export async function fetcher<T>(
 ): Promise<T> {
   const url = qs.stringifyUrl(
     {
-      url: `${BASE_URL}/${endpoint}`,
+      url: `${BASE_URL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`,
       query: params,
     },
     { skipEmptyString: true, skipNull: true },
@@ -23,7 +23,7 @@ export async function fetcher<T>(
 
   const response = await fetch(url, {
     headers: {
-      'x-cg-pro-api-key': API_KEY,
+      'x-cg-demo-api-key': API_KEY,
       'Content-Type': 'application/json',
     } as Record<string, string>,
     next: { revalidate },
